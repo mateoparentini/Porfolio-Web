@@ -1,0 +1,120 @@
+---
+import ThemeToggle from "./ThemeToggle.astro"
+import { translations } from "../i18n/translations"
+
+const navItems = [
+  {
+    title: translations.en.nav.sobreMi,
+    label: "sobre-mi",
+    url: "/#sobre-mi",
+  },
+  {
+    title: "Projects/Experience",
+    label: "proyectos",
+    url: "/#proyectos",
+  },
+  {
+    title: translations.en.nav.certificados,
+    label: "certificados",
+    url: "/#certificados",
+  },
+  {
+    title: translations.en.nav.contacto,
+    label: "contacto",
+    url: "https://mail.google.com/mail/?view=cm&fs=1&to=parentinimateo@gmail.com",
+  },
+]
+---
+
+<header
+  class="fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2"
+>
+  <nav
+    class="flex px-3 text-sm font-medium rounded-full text-gray-600 dark:text-gray-200 justify-center items-center gap-2"
+  >
+    {
+      navItems.map((link) => (
+        <a
+          class="relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500"
+          aria-label={link.label}
+          href={link.url}
+        >
+          {link.title}
+        </a>
+      ))
+    }
+    <div class="flex items-center gap-2 ml-4 pl-4 border-l border-gray-300 dark:border-gray-600">
+      <ThemeToggle />
+    </div>
+  </nav>
+</header>
+
+<script>
+  import { translations } from "../i18n/translations"
+
+  function initHeader() {
+    const sections = document.querySelectorAll("section")
+    const navItems = document.querySelectorAll("header nav a")
+
+    const callback = (entries: any[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navItems.forEach((item) => {
+            if (item.getAttribute("aria-label") == entry.target.id) {
+              item.classList.add("text-blue-500")
+            } else {
+              item.classList.remove("text-blue-500")
+            }
+          })
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(callback, {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.3,
+    })
+
+    sections.forEach((section) => {
+      observer.observe(section)
+    })
+
+    document.onvisibilitychange = () => {
+      if (document.visibilityState === "hidden") {
+        observer.disconnect()
+      } else {
+        sections.forEach((section) => {
+          observer.observe(section)
+        })
+      }
+    }
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    initHeader()
+  })
+
+  initHeader()
+</script>
+
+<style>
+  nav {
+    animation: nav-shadown 1s linear both;
+    animation-timeline: scroll();
+    animation-range: 0 100px;
+  }
+
+  nav {
+    @apply dark:bg-gray-800/90 bg-white/50;
+  }
+
+  @keyframes nav-shadown {
+    0% {
+      @apply dark:bg-gray-800/0 bg-white/0;
+    }
+    to {
+      @apply shadow-lg ring-1 backdrop-blur ring-white/10;
+    }
+  }
+</style>

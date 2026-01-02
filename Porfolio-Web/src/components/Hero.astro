@@ -1,0 +1,93 @@
+---
+import { translations } from "../i18n/translations"
+const personalImageAlt = "Mateo Parentini"
+import Badge from "@/components/Badge.astro"
+import LinkedInIcon from "@/components/icons/LinkedIn.astro"
+import MailIcon from "@/components/icons/Mail.astro"
+import GitHubIcon from "@/components/icons/GitHub.astro"
+import SocialPill from "@/components/SocialPill.astro"
+---
+
+<div class="max-w-xl">
+  <div class="mb-4">
+    <a
+      href="https://linkedin.com/in/mateoparentini"
+      target="_blank"
+      rel="noopener"
+      class="inline-flex items-center transition md:justify-center md:hover:scale-105"
+    >
+      <Badge id="badge-available">{translations.en.hero.available}</Badge>
+    </a>
+  </div>
+  <h1
+    id="hero-name"
+    class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white"
+  >
+    {translations.en.hero.name}
+  </h1>
+  <p
+    id="hero-description"
+    class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
+  >
+    <strong>{translations.en.hero.experience} {translations.en.hero.title}</strong>. {translations.en.hero.desc}
+  </p>
+  <nav class="flex flex-wrap gap-4 mt-8">
+    <SocialPill href="https://mail.google.com/mail/?view=cm&fs=1&to=parentinimateo@gmail.com">
+      <MailIcon class="size-4" />
+      <span id="btn-contact">{translations.en.hero.contactMe}</span>
+    </SocialPill>
+    <SocialPill href="https://www.linkedin.com/in/mateo-parentini-75026a363/">
+      <LinkedInIcon class="size-4" />
+      LinkedIn
+    </SocialPill>
+    <SocialPill href="https://github.com/mateoparentini">
+      <GitHubIcon class="size-4" />
+      GitHub
+    </SocialPill>
+  </nav>
+</div>
+
+<script type="module">
+  function updateHero(lang) {
+    const translations = {
+      en: {
+        hero: {
+          available: "Available for work",
+          name: "Hey, I'm Mateo",
+          experience: "Junior Developer on Programming and cybersecurity lover",
+          title: "from Uruguay",
+          location: "",
+          desc: "Specialized in development of unique web applications.",
+          contactMe: "Contact Me",
+        }
+      }
+    }
+    
+    const trans = translations.en
+    const badgeEl = document.getElementById('badge-available')
+    const nameEl = document.getElementById('hero-name')
+    const descEl = document.getElementById('hero-description')
+    const contactEl = document.getElementById('btn-contact')
+    
+    if (badgeEl) badgeEl.textContent = trans.hero.available
+    if (nameEl) nameEl.textContent = trans.hero.name
+    if (descEl) descEl.innerHTML = 
+      '<strong>' + trans.hero.experience + ' ' + trans.hero.title + '</strong>. ' + 
+      trans.hero.desc
+    if (contactEl) contactEl.textContent = trans.hero.contactMe
+  }
+
+  // Initialize when DOM is ready
+  function initializeHero() {
+    if (document.getElementById('hero-name')) {
+      updateHero('en')
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeHero)
+  } else {
+    initializeHero()
+  }
+</script>

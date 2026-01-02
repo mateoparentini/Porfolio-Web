@@ -1,0 +1,152 @@
+---
+import { translations } from "../i18n/translations"
+
+const certMapping = {
+  2: 'cyber',
+  3: 'first',
+  4: 'b2it',
+  5: 'sql',
+  6: 'sqli',
+  7: 'excel',
+  8: 'python',
+  9: 'java',
+}
+
+const certificates = [
+  { id: 2, thumb: '/certificates/juniorc.png', image: '/certificates/juniorc.png' },
+  { id: 3, thumb: '/certificates/first.png', image: '/certificates/first.png' },
+  { id: 4, thumb: '/certificates/b2it.png', image: '/certificates/b2it.png' },
+  { id: 5, thumb: '/certificates/sql.png', image: '/certificates/sql.png' },
+  { id: 6, thumb: '/certificates/af7fdb4d-83e4-46bd-b2c9-85935448d7a3.png', image: '/certificates/af7fdb4d-83e4-46bd-b2c9-85935448d7a3.png' },
+  { id: 7, thumb: '/certificates/excel.jpg', image: '/certificates/excel.jpg' },
+  { id: 8, thumb: '/certificates/pthon.png', image: '/certificates/pthon.png' },
+  { id: 9, thumb: '/certificates/java.png', image: '/certificates/java.png' },
+]
+---
+
+<section class="py-12" id="certificados">
+  <div class="max-w-6xl mx-auto">
+    <p id="cert-description" class="mb-6 text-gray-700 dark:text-gray-300">{translations.en.certificates.desc}</p>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      {certificates.map((cert) => {
+        const key = certMapping[cert.id]
+        const trans = translations.en.certificates.items[key]
+        return (
+          <button
+            class="group bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm ring-1 ring-black/10 dark:ring-white/10 text-left p-2 hover:scale-105 transform transition"
+            onClick={() => openModal(cert.image, trans.title, trans.desc)}
+            aria-label={`Ver certificado ${trans.title}`}
+            data-cert-id={cert.id}>
+            <img src={cert.thumb} alt={trans.title} class="w-full h-36 object-cover rounded-md mb-2 bg-black/5" />
+            <div class="text-sm text-gray-800 dark:text-gray-200">
+              <strong class="block text-yellow-500 dark:text-yellow-200 cert-title">{trans.title}</strong>
+              <span class="text-xs text-gray-500 dark:text-gray-400 cert-desc">{trans.desc}</span>
+            </div>
+          </button>
+        )
+      })}
+    </div>
+
+    <dialog id="cert-modal" class="rounded-lg p-0 max-w-3xl w-full">
+      <div class="flex justify-end p-2">
+        <button id="cert-close" class="text-gray-600 dark:text-gray-300">{translations.en.certificates.close}</button>
+      </div>
+      <div class="p-4">
+        <h3 id="cert-title" class="font-semibold text-lg text-gray-800 dark:text-gray-100 mb-2"></h3>
+        <p id="cert-desc" class="text-sm text-gray-600 dark:text-gray-300 mb-4"></p>
+        <img id="cert-image" src="" alt="certificado" class="w-full h-auto rounded-md" />
+      </div>
+    </dialog>
+  </div>
+
+  <script type="module">
+    const certMapping = {
+      2: 'cyber',
+      3: 'first',
+      4: 'b2it',
+      5: 'sql',
+      6: 'sqli',
+      7: 'excel',
+      8: 'python',
+      9: 'java',
+    }
+
+    const translations = {
+      en: {
+        certificates: {
+          close: "Close ✕",
+          items: {
+            cyber: { title: "Junior Cybersecurity Analyst", desc: "Cisco Cybersecurity Certification and Threat Analysis" },
+            first: { title: "First Certificate B2 English", desc: "Cambridge English B2 Certification" },
+            b2it: { title: "English B2 in IT", desc: "English B2 level specialized in technology" },
+            sql: { title: "SQL Fundamentals", desc: "Database fundamentals and SQL language" },
+            sqli: { title: "SQL Injection Attacks", desc: "Database security and SQL attack prevention" },
+            excel: { title: "Microsoft Excel", desc: "Advanced spreadsheet mastery and data analysis" },
+            python: { title: "Python Programming", desc: "Python programming and application development" },
+            java: { title: "Java Development", desc: "Java programming and software development" },
+          },
+        }
+      }
+    }
+
+    const dialog = document.getElementById('cert-modal')
+    const img = document.getElementById('cert-image')
+    const title = document.getElementById('cert-title')
+    const desc = document.getElementById('cert-desc')
+    const closeBtn = document.getElementById('cert-close')
+
+    window.openModal = (src, t, d) => {
+      img.src = src
+      img.alt = t
+      title.textContent = t
+      desc.textContent = d
+      if (typeof dialog.showModal === 'function') dialog.showModal()
+      else dialog.style.display = 'block'
+    }
+
+    closeBtn?.addEventListener('click', () => {
+      if (typeof dialog.close === 'function') dialog.close()
+      else dialog.style.display = 'none'
+    })
+
+    dialog?.addEventListener('click', (e) => {
+      if (e.target === dialog) {
+        if (typeof dialog.close === 'function') dialog.close()
+        else dialog.style.display = 'none'
+      }
+    })
+
+    // Initialize when DOM is ready
+    function initializeCertificates() {
+      if (document.getElementById('cert-description')) {
+        const _trans = translations.en
+        
+        const _descEl = document.getElementById('cert-description')
+        if (_descEl) _descEl.textContent = "Below is a selection of my certificates. Showing my knowledge in different fields of programming and cybersecurity. As well as in languages like English."
+        
+        if (closeBtn) closeBtn.textContent = _trans.certificates.close
+        
+        const _buttons = document.querySelectorAll('[data-cert-id]')
+        _buttons.forEach((btn) => {
+          const certId = parseInt(btn.getAttribute('data-cert-id'))
+          const key = certMapping[certId]
+          const certTrans = _trans.certificates.items[key]
+          
+          const titleEl = btn.querySelector('.cert-title')
+          const descElItem = btn.querySelector('.cert-desc')
+          
+          if (titleEl) titleEl.textContent = certTrans.title
+          if (descElItem) descElItem.textContent = certTrans.desc
+        })
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeCertificates)
+    } else {
+      initializeCertificates()
+    }
+  </script>
+</section>
+

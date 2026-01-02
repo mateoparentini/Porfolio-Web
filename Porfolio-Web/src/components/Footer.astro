@@ -1,0 +1,44 @@
+---
+import { translations } from "../i18n/translations"
+
+const currentYear = new Date().getFullYear()
+---
+
+<footer
+  class="opacity-80 m-4 min-[375px]:pl-4 md:pl-0 mt-16 w-full mx-auto container lg:max-w-4xl md:max-w-2xl mb-10 flex justify-center"
+>
+  <div
+    class="rounded-lg w-full max-w-screen-xl mx-auto md:flex md:items-center md:justify-between py-4"
+  >
+    <span class="text-sm sm:text-center text-zinc-800/90 dark:text-zinc-200/90"
+      >&copy; {currentYear}
+      <span id="footer-copyright">{translations.en.footer.copyright}</span>
+    </span>
+    <ul
+      class="flex flex-wrap items-center mt-3 text-sm font-medium dark:text-white/90 sm:mt-0"
+    >
+      <li>
+        <a href="/#sobre-mi" id="footer-about" class="hover:underline me-4 md:me-6">{translations.en.footer.aboutMe}</a>
+      </li>
+      <li>
+        <a id="footer-contact" href="https://mail.google.com/mail/?view=cm&fs=1&to=parentinimateo@gmail.com" class="hover:underline"
+          >{translations.en.footer.contact}</a
+        >
+      </li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  function initializeFooter() {
+    if (document.getElementById('footer-copyright')) {
+      // Already rendered in English during build
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeFooter)
+  } else {
+    initializeFooter()
+  }
+</script>
