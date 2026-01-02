@@ -5,5 +5,5 @@ import robotsTxt from "astro-robots-txt"
 export default defineConfig({
   output: "static",   
   integrations: [tailwind(), robotsTxt()],
-  site: 'https://porfolio.dev/',
+  site: 'https://mateoparentini.netlify.app/',
 })
