@@ -26,7 +26,7 @@ export const translations = {
     },
     certificates: {
       title: "Certificates",
-      desc: "Below is a selection of my certificates. Showing my knowledge in different fields of programming and cybersecurity. As well as in languages like English.",
+      desc: "Below is a selection of my certificates, showcasing my knowledge across different areas of programming and cybersecurity. It also includes certifications in databases such as SQL, data analysis tools like Microsoft Excel, and language proficiency, including English. These certifications reflect my continuous learning mindset and my commitment to developing both technical and analytical skills.",
       close: "Close ✕",
       items: {
         cyber: { title: "Junior Cybersecurity Analyst", desc: "Cisco Cybersecurity Certification and Threat Analysis" },
